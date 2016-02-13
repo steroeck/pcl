@@ -64,9 +64,9 @@ namespace pcl
     EIGEN_ALIGN16 Eigen::Matrix3f covariance_matrix;
     // 16-bytes aligned placeholder for the XYZ centroid of a surface patch
     Eigen::Vector4f xyz_centroid;
-
+    compute3DCentroid(cloud,xyz_centroid);
     if (cloud.size () < 3 ||
-        computeMeanAndCovarianceMatrix (cloud, covariance_matrix, xyz_centroid) == 0)
+        computeCovarianceMatrix (cloud, xyz_centroid, covariance_matrix ) == 0)
     {
       plane_parameters.setConstant (std::numeric_limits<float>::quiet_NaN ());
       curvature = std::numeric_limits<float>::quiet_NaN ();
@@ -96,8 +96,9 @@ namespace pcl
     EIGEN_ALIGN16 Eigen::Matrix3f covariance_matrix;
     // 16-bytes aligned placeholder for the XYZ centroid of a surface patch
     Eigen::Vector4f xyz_centroid;
+    compute3DCentroid(cloud,indices,xyz_centroid);
     if (indices.size () < 3 ||
-        computeMeanAndCovarianceMatrix (cloud, indices, covariance_matrix, xyz_centroid) == 0)
+        computeCovarianceMatrix (cloud, indices, xyz_centroid, covariance_matrix) == 0)
     {
       plane_parameters.setConstant (std::numeric_limits<float>::quiet_NaN ());
       curvature = std::numeric_limits<float>::quiet_NaN ();
